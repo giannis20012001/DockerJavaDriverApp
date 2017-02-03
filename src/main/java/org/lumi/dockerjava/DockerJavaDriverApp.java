@@ -4,7 +4,6 @@ import com.github.dockerjava.api.DockerClient;
 import com.github.dockerjava.api.command.CreateContainerResponse;
 import com.github.dockerjava.api.command.DockerCmdExecFactory;
 import com.github.dockerjava.api.model.ExposedPort;
-import com.github.dockerjava.api.model.Info;
 import com.github.dockerjava.api.model.Ports;
 import com.github.dockerjava.api.model.SearchItem;
 import com.github.dockerjava.core.DefaultDockerClientConfig;
@@ -16,7 +15,7 @@ import java.util.List;
 
 /**
  * Created by John Tsantilis
- * (i[dot]tsantilis[at]yahoo.com A.K.A lumi) on 3/2/2017.
+ * (i [dot] tsantilis [at] yahoo [dot] com A.K.A lumi) on 3/2/2017.
  */
 
 public class DockerJavaDriverApp {
@@ -50,13 +49,16 @@ public class DockerJavaDriverApp {
         ExposedPort tcp = ExposedPort.tcp(1026);
         Ports portBindings = new Ports();
         System.out.println(tcp.toString());
-        portBindings.bind(tcp, new Ports.Binding("10.205.130.139", "1026"));
+        portBindings.bind(tcp, new Ports.Binding("0.0.0.0", "1026"));
 
+        final String testVariable = "dbhost 172.17.0.1";
         CreateContainerResponse container = dockerClient.createContainerCmd("fiware/orion")
                 .withExposedPorts(tcp)
                 .withPortBindings(portBindings)
                 .withName("orion")
                 .withPublishAllPorts(true)
+                //.withEnv(testVariable)
+                .withCmd("-dbhost 172.17.0.1")
                 .exec();
 
         dockerClient.startContainerCmd(container.getId()).exec();

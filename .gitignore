@@ -1,0 +1,15 @@
+<<<<<<< Updated upstream
+/target/
+=======
+target
+.classpath
+.project
+.settings
+.DS_Store
+.idea/
+nb-configuration.xml
+.directory
+build
+*.iml
+*.log
+>>>>>>> Stashed changes
